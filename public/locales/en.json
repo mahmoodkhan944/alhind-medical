@@ -1,0 +1,26 @@
+{
+  "common": {
+    "home": "Home",
+    "treatments": "Treatments",
+    "hospitals": "Hospitals",
+    "doctors": "Doctors",
+    "aiMatch": "AI Match",
+    "costCalculator": "Cost Calculator",
+    "dashboard": "Dashboard",
+    "getStarted": "Get Started"
+  },
+  "hero": {
+    "title1": "World-Class",
+    "title2": "Healthcare",
+    "title3": "Within Reach",
+    "subtitle": "Connect with top-rated hospitals in India and Turkey. Save up to 80% on procedures while receiving exceptional care.",
+    "findDoctor": "Find Your Doctor",
+    "explore": "Explore Treatments"
+  },
+  "stats": {
+    "patients": "Happy Patients",
+    "doctors": "Expert Doctors",
+    "hospitals": "Partner Hospitals",
+    "success": "Success Rate"
+  }
+}

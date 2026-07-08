@@ -1,26 +1,530 @@
 @import "tailwindcss";
 
+/* =========================================================
+   ALHIND — PREMIUM HEALTHCARE DESIGN SYSTEM
+========================================================= */
+
+@theme {
+  /* Brand */
+  --color-medical-navy: #0b2545;
+  --color-medical-blue: #2563eb;
+  --color-medical-cyan: #0891b2;
+  --color-medical-teal: #0f766e;
+  --color-medical-green: #059669;
+  --color-medical-orange: #f59e0b;
+
+  /* Background */
+  --color-bg-main: #f8fbff;
+  --color-bg-secondary: #eff6ff;
+  --color-bg-soft: #f0fdfa;
+  --color-bg-dark: #071a2f;
+
+  /* Text */
+  --color-txt-primary: #0b2545;
+  --color-txt-secondary: #486581;
+  --color-txt-muted: #829ab1;
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-jakarta);
+
+  /* Gradients */
+  --background-image-cta-gradient:
+    linear-gradient(135deg, #2563eb 0%, #0891b2 50%, #0f766e 100%);
+
+  --background-image-medical-gradient:
+    linear-gradient(135deg, #0b2545 0%, #2563eb 50%, #0f766e 100%);
+}
+
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --medical-navy: #0b2545;
+  --medical-blue: #2563eb;
+  --medical-cyan: #0891b2;
+  --medical-teal: #0f766e;
+  --medical-green: #059669;
+  --medical-orange: #f59e0b;
+
+  --bg-main: #f8fbff;
+  --bg-secondary: #eff6ff;
+  --bg-soft: #f0fdfa;
+
+  --txt-primary: #0b2545;
+  --txt-secondary: #486581;
+  --txt-muted: #829ab1;
+
+  --border-soft: #dbeafe;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  width: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+
+  overflow-x: hidden;
+
+  background:
+    radial-gradient(
+      circle at 5% 10%,
+      rgba(37, 99, 235, 0.08),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 95% 80%,
+      rgba(15, 118, 110, 0.08),
+      transparent 30%
+    ),
+    #f8fbff;
+
+  color: var(--txt-primary);
+
+  font-family:
+    var(--font-inter),
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+video,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+  width: 100%;
+}
+
+/* =========================================================
+   PREMIUM MEDICAL BACKGROUND
+========================================================= */
+
+body::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  z-index: -2;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(37, 99, 235, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(37, 99, 235, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 60px 60px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 85%
+    );
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fbff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #2563eb,
+      #0891b2,
+      #0f766e
+    );
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      #1d4ed8,
+      #0e7490,
+      #115e59
+    );
+}
+
+/* =========================================================
+   GLASS
+========================================================= */
+
+.glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(248, 251, 255, 0.72)
+    );
+
+  border:
+    1px solid
+    rgba(219, 234, 254, 0.8);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 20px 60px rgba(11, 37, 69, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.glass-dark {
+  background:
+    rgba(7, 26, 47, 0.82);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 25px 70px rgba(7, 26, 47, 0.3);
+}
+
+/* =========================================================
+   GRADIENT TEXT
+========================================================= */
+
+.gradient-text {
+  display: inline-block;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb 0%,
+      #0891b2 50%,
+      #0f766e 100%
+    );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================
+   3D CANVAS
+========================================================= */
+
+.canvas-container {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+.canvas-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* =========================================================
+   SECTION CONTAINER
+========================================================= */
+
+.section-container {
+  width: calc(100% - 3rem);
+  max-width: 1280px;
+
+  margin-inline: auto;
+}
+
+/* =========================================================
+   ANIMATED UNDERLINE
+========================================================= */
+
+.animated-underline {
+  position: relative;
+}
+
+.animated-underline::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -5px;
+
+  width: 0;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #0891b2,
+      #0f766e
+    );
+
+  transition:
+    width 300ms ease;
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* =========================================================
+   PULSE
+========================================================= */
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  position: relative;
+}
+
+.pulse-ring::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  background: inherit;
+
+  animation:
+    pulse-ring
+    2s
+    cubic-bezier(0.215, 0.61, 0.355, 1)
+    infinite;
+}
+
+/* =========================================================
+   NOISE
+========================================================= */
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 9999;
+
+  pointer-events: none;
+
+  opacity: 0.018;
+
+  background-image:
+    url(
+      "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"
+    );
+}
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+  color: #0b2545;
+  background:
+    rgba(37, 99, 235, 0.2);
+}
+
+/* =========================================================
+   RESPONSIVE CONTAINERS
+========================================================= */
+
+@media (max-width: 1024px) {
+  .section-container {
+    width: calc(100% - 2.5rem);
+  }
+
+  .glass {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    width: calc(100% - 2rem);
+  }
+
+  .glass {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+@media (max-width: 480px) {
+  .section-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .noise-overlay {
+    opacity: 0.012;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.hospital-map-label {
+  width: max-content;
+  max-width: 190px;
+
+  padding: 8px 12px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid rgba(14, 165, 233, 0.25);
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 8px 25px rgba(15, 23, 42, 0.18);
+
+  backdrop-filter: blur(10px);
+
+  transform: translate(-50%, -48px);
+
+  white-space: nowrap;
+
+  pointer-events: none;
+}
+
+.hospital-map-label strong {
+  display: block;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  font-weight: 700;
+
+  color: #0f2747;
+}
+
+.hospital-map-label span {
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 10px;
+
+  color: #64748b;
+}
+
+@keyframes float {
+
+0%,
+100% {
+transform: translateY(0px);
+}
+
+50% {
+transform: translateY(-12px);
+}
+
+}
+
+@keyframes plane {
+
+0%{
+transform:translate(-90px,40px);
+}
+
+50%{
+transform:translate(70px,-40px);
+}
+
+100%{
+transform:translate(-90px,40px);
+}
+
 }

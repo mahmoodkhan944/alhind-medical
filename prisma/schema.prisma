@@ -1,0 +1,135 @@
+generator client {
+  provider        = "prisma-client-js"
+  moduleFormat    = "esm"   // required for Prisma 7
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  // Migrations use prisma.config.ts instead
+}
+
+model Patient {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  name           String
+  phone          String?
+  country        String
+  language       String   @default("en")
+  dateOfBirth    DateTime?
+  medicalHistory String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  consultations  Consultation[]
+  treatments     PatientTreatment[]
+  appointments   Appointment[]
+}
+
+model Doctor {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  specialty     String
+  hospitalId    String
+  hospital      Hospital  @relation(fields: [hospitalId], references: [id])
+  experience    Int
+  rating        Float     @default(0)
+  reviewsCount  Int       @default(0)
+  bio           String?   @db.Text
+  languages     String[]
+  avatarUrl     String?
+  available     Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  consultations  Consultation[]
+  appointments   Appointment[]
+}
+
+model Hospital {
+  id            String    @id @default(cuid())
+  name          String
+  country       String    // "India" or "Turkey"
+  city          String
+  address       String
+  latitude      Float
+  longitude     Float
+  rating        Float     @default(0)
+  accreditations String[]
+  bedCount      Int
+  established   Int
+  imageUrl      String?
+  description   String?   @db.Text
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  doctors       Doctor[]
+  treatments    Treatment[]
+}
+
+model Treatment {
+  id            String    @id @default(cuid())
+  name          String
+  category      String
+  description   String    @db.Text
+  priceIndia    Float
+  priceTurkey   Float
+  durationDays  Int
+  hospitalIds   String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  hospitals     Hospital[]
+  patients      PatientTreatment[]
+}
+
+model Consultation {
+  id            String    @id @default(cuid())
+  patientId     String
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  doctorId      String?
+  doctor        Doctor?   @relation(fields: [doctorId], references: [id])
+  status        String    @default("pending") // pending, scheduled, completed, cancelled
+  scheduledAt   DateTime?
+  notes         String?   @db.Text
+  aiMatchScore  Float?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model PatientTreatment {
+  id            String    @id @default(cuid())
+  patientId     String
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  treatmentId   String
+  treatment     Treatment @relation(fields: [treatmentId], references: [id])
+  status        String    @default("planned")
+  totalCost     Float?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Appointment {
+  id            String    @id @default(cuid())
+  patientId     String
+  patient       Patient   @relation(fields: [patientId], references: [id])
+  doctorId      String
+  doctor        Doctor    @relation(fields: [doctorId], references: [id])
+  scheduledAt   DateTime
+  duration      Int       @default(30)
+  status        String    @default("scheduled")
+  notes         String?   @db.Text
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Translation {
+  id            String    @id @default(cuid())
+  key           String
+  locale        String
+  value         String    @db.Text
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([key, locale])
+}
