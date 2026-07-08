@@ -322,7 +322,7 @@ function FlightPath({
   from: Hospital
   to: Hospital
 }) {
-  const particleRef = useRef<THREE.Mesh>(null)
+  const particleGroupRef = useRef<THREE.Group>(null)
 
   const curve = useMemo(() => {
     const start = latLonToVector3(
@@ -357,8 +357,18 @@ function FlightPath({
     )
   }, [curve])
 
+  const routeLine = useMemo(() => {
+    const material = new THREE.LineBasicMaterial({
+      color: '#f59e0b',
+      transparent: true,
+      opacity: 0.7,
+    })
+
+    return new THREE.Line(geometry, material)
+  }, [geometry])
+
   useFrame((state) => {
-    if (!particleRef.current) return
+    if (!particleGroupRef.current) return
 
     const speed = 0.12
 
@@ -367,44 +377,38 @@ function FlightPath({
 
     const position = curve.getPoint(progress)
 
-    particleRef.current.position.copy(position)
+    particleGroupRef.current.position.copy(position)
   })
 
   return (
     <group>
       {/* SUBTLE ROUTE LINE */}
 
-      <line geometry={geometry}>
-        <lineBasicMaterial
-          color="#f59e0b"
-          transparent
-          opacity={0.45}
-        />
-      </line>
+      <primitive object={routeLine} />
 
-      {/* MOVING PARTICLE */}
+      {/* MOVING PARTICLE + GLOW */}
 
-      <mesh ref={particleRef}>
-        <sphereGeometry args={[0.025, 16, 16]} />
+      <group ref={particleGroupRef}>
+        <mesh>
+          <sphereGeometry args={[0.025, 16, 16]} />
 
-        <meshBasicMaterial
-          color="#fbbf24"
-          toneMapped={false}
-        />
-      </mesh>
+          <meshBasicMaterial
+            color="#fbbf24"
+            toneMapped={false}
+          />
+        </mesh>
 
-      {/* PARTICLE GLOW */}
+        <mesh>
+          <sphereGeometry args={[0.05, 16, 16]} />
 
-      <mesh ref={particleRef}>
-        <sphereGeometry args={[0.05, 16, 16]} />
-
-        <meshBasicMaterial
-          color="#f59e0b"
-          transparent
-          opacity={0.25}
-          toneMapped={false}
-        />
-      </mesh>
+          <meshBasicMaterial
+            color="#f59e0b"
+            transparent
+            opacity={0.25}
+            toneMapped={false}
+          />
+        </mesh>
+      </group>
     </group>
   )
 }
