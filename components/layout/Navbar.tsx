@@ -23,10 +23,10 @@ const NAV_ITEMS = [
   { href: '/treatments', label: 'Treatments', icon: Stethoscope },
   { href: '/hospitals', label: 'Hospitals', icon: Building2 },
   { href: '/doctors', label: 'Doctors', icon: UserRound },
-  { href: '/ai-match', label: 'AI Match', icon: Brain },
+  { href: '/aboutus', label: 'About Us', icon: Brain },
   {
-    href: '/cost-calculator',
-    label: 'Cost Calculator',
+    href: '/contactus',
+    label: 'Contact Us',
     icon: Calculator,
   },
 ]
